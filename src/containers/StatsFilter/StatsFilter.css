@@ -38,3 +38,6 @@ polygon {
     fill: #ffffff;
     cursor: pointer;
   }
+  .StatsPolution{
+    margin-top: -150px;
+  }

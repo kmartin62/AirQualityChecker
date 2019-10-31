@@ -1,10 +1,12 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Container, Row, Col } from 'reactstrap';
 import classes from '../IntroScreen/IntroScreen.css';
 import { Redirect } from 'react-router-dom'
 import Select from 'react-select';
-import { Button } from 'reactstrap';
-
+import {
+  Card, CardImg, CardText, CardBody,
+  CardTitle, Button
+} from 'reactstrap';
 
 const options = [
     { value: 'Skopje', label: 'Skopje' },
@@ -23,7 +25,7 @@ const options = [
     { value: 'Kicevo', label: 'Kicevo' },
     { value: 'Kocani', label: 'Kocani' },
     { value: 'Kratovo', label: 'Kratovo' },
-    { value: 'kriva palanka', label: 'Kriva Palanka' },
+    { value: 'Kriva palanka', label: 'Kriva Palanka' },
     { value: 'krusevo', label: 'Krusevo' },
     { value: 'Kumanovo', label: 'Kumanovo' },
     { value: 'Makedonski brod', label: 'Makedonski Brod' },
@@ -39,10 +41,10 @@ const options = [
     { value: 'Stip', label: 'Stip' },
 ];
 export default class StatsChart extends React.Component {
-    constructor(props){
-        super(props);
-        // this.textInput;
-    }
+    // constructor(props){
+    //     super(props);
+    //     // this.textInput;
+    // }
     state = {
         redirect: false,
         selectedOption: null,
@@ -68,7 +70,8 @@ export default class StatsChart extends React.Component {
 
     render() {
        return(
-           <Container p>
+         <div>
+           <Container>
                <Row>
                    <Col md="5" className={classes.Content}>
                    <h2>Welcome to AirQ!</h2>
@@ -101,7 +104,37 @@ export default class StatsChart extends React.Component {
                     <img src={require('./animation.gif')} alt="" style={{ width:"120%"}}/>
                    </Col>
                </Row>
+               <Row className={classes.Cards}>
+                 <Col md="4">
+                 <Card style={{borderWidth:"5px", borderColor:"#ffffff"}}>
+                    <CardImg top width="100%" src={require('./pics-02.svg')} alt="Card image cap" />
+                    <CardBody>
+                      <CardTitle>Analytics</CardTitle>
+                      <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
+                    </CardBody>
+                  </Card>
+                 </Col>
+                 <Col md="4">
+                 <Card style={{borderWidth:"5px", borderColor:"#ffffff"}}>
+                    <CardImg top width="100%" src={require('./pics-01.svg')} alt="Card image cap" />
+                    <CardBody>
+                      <CardTitle>Stats</CardTitle>
+                      <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
+                    </CardBody>
+                  </Card>
+                 </Col>
+                 <Col md="4">
+                 <Card style={{borderWidth:"5px", borderColor:"#ffffff"}}>
+                    <CardImg top width="100%" src={require('./pics-03.svg')} alt="Card image cap" />
+                    <CardBody>
+                      <CardTitle>Realtime Update</CardTitle>
+                      <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
+                    </CardBody>
+                  </Card>
+                 </Col>
+               </Row>
            </Container>
+           </div>
        )
     }
 }

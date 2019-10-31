@@ -1,18 +1,44 @@
-import React, { Component, Fragment } from 'react'
+import React from 'react'
 import classes from '../StatsFilter/StatsFilter.css';
 import Select from 'react-select';
 import { firebaseConfig } from '../../components/Utils/config';
 import firebase from 'firebase';
-import {Bar, Pie, Doughnut} from 'react-chartjs-2';
-import { Container, Row, Col } from 'reactstrap';
+import {Doughnut} from 'react-chartjs-2';
+import { Container, Row, Col , Alert} from 'reactstrap';
 import MapComponent from "../../components/Map/Map";
 
+import Generator from "../../components/Generator/Generator";
 const options = [
-    { value: 'skopje', label: 'Skopje' },
-    { value: 'bitola', label: 'Bitola' },
-    { value: 'radovis', label: 'Radovis' },
-    { value: 'strumica', label: 'Strumica' },
-    { value: 'kumanovo', label: 'Kumanovo' },
+    { value: 'Skopje', label: 'Skopje' },
+    { value: 'Bitola', label: 'Bitola' },
+    { value: 'Radovis', label: 'Radovis' },
+    { value: 'Berovo', label: 'Berovo' },
+    { value: 'Valandovo', label: 'Valandovo' },
+    { value: 'Veles', label: 'Veles' },
+    { value: 'Vinica', label: 'Vinica' },
+    { value: 'Gevgelija', label: 'Gevgelija' },
+    { value: 'Gostivar', label: 'Gostivar' },
+    { value: 'Debar', label: 'Debar' },
+    { value: 'Delcevo', label: 'Delcevo' },
+    { value: 'Demir hisar', label: 'Demir Hisar' },
+    { value: 'Kavadarci', label: 'Kavadarci' },
+    { value: 'Kicevo', label: 'Kicevo' },
+    { value: 'Kocani', label: 'Kocani' },
+    { value: 'Kratovo', label: 'Kratovo' },
+    { value: 'Kriva palanka', label: 'Kriva Palanka' },
+    { value: 'Krusevo', label: 'Krusevo' },
+    { value: 'Kumanovo', label: 'Kumanovo' },
+    { value: 'Makedonski brod', label: 'Makedonski Brod' },
+    { value: 'Negotino', label: 'Negotino' },
+    { value: 'Ohrid', label: 'Ohrid' },
+    { value: 'Prilep', label: 'Prilep' },
+    { value: 'Probistip', label: 'Probistip' },
+    { value: 'Resen', label: 'Resen' },
+    { value: 'Sveti Nikole', label: 'Sveti Nikole' },
+    { value: 'Struga', label: 'Struga' },
+    { value: 'Strumica', label: 'Strumica' },
+    { value: 'Tetovo', label: 'Tetovo' },
+    { value: 'Stip', label: 'Stip' },
 ];
 const data = {
     datasets: [
@@ -24,7 +50,6 @@ const data = {
             legendColor: 'rgba(255,99,132,1)',
             borderWidth: 4,
             hoverBackgroundColor: 'rgb(255,255,255,1)',
-            borderColor: 'rgb(30,14,98,1)',
             data: []
         }
     ]
@@ -67,14 +92,23 @@ class StatsFilter extends React.Component {
     }
     myFunction(param){
         this.readUserData(param.target.id);
-        // console.log("do something", param.target.id);
+        let p = document.getElementsByTagName("polygon");
+        for (let i=0; i<p.length; i++){
+            p[i].style.fill = '#27a7df';
+        }
+        let x = document.getElementById(param.target.id);
+        if (x.style.fill === '#27a7df') {
+            x.style.fill = '#ffffff';
+        } else {
+            x.style.fill = '#ffffff';
+        }
     }
     setCityName(){
         var path = this.props.location.pathname;
         var directories = path.split("/");
         var lastDirectory = directories[(directories.length - 1)];
-        var lastDirectory=lastDirectory.charAt(0).toUpperCase() + lastDirectory.slice(1);
-        if(directories.length==3 && lastDirectory!=''){
+        lastDirectory=lastDirectory.charAt(0).toUpperCase() + lastDirectory.slice(1);
+        if(directories.length===3 && lastDirectory!==''){
             this.setState({city_name: lastDirectory});
         }else{
             lastDirectory="Skopje";
@@ -86,7 +120,6 @@ class StatsFilter extends React.Component {
         firebase.database().ref("Momentalno/" + city_name + "/").once('value', (snapshot) => {
             if(snapshot.exists()){
                 if(snapshot.val().key.localeCompare(this.getKey()) === 0) {
-                    console.log(snapshot.val().key.localeCompare(this.getKey()));
                     this.setState({pm10: snapshot.val().pm10});
                     this.setState({pm25: snapshot.val().pm25});
                     this.setState({aqi: snapshot.val().aqi});
@@ -104,7 +137,6 @@ class StatsFilter extends React.Component {
         })
     }
     writeUserData(city_name, key, pm10, pm25, aqi){
-        let date = this.getKey();
         firebase.database().ref("Momentalno/" + city_name + "/").set({
             city_name,
             pm10,
@@ -112,7 +144,7 @@ class StatsFilter extends React.Component {
             aqi,
             key
         }).catch((error) => {
-            console.log("error ", error)
+            // console.log("error ", error)
         });
 
         firebase.database().ref("Istorija/").push({
@@ -122,7 +154,7 @@ class StatsFilter extends React.Component {
             aqi,
             key
         }).catch((error) => {
-            console.log("error ", error)
+            // console.log("error ", error)
         });
     }
 
@@ -159,6 +191,11 @@ class StatsFilter extends React.Component {
         return (
             <div>
             <Container className="p-5">
+               {(this.state.pm10 > 40 || this.state.pm25 > 25 || this.state.aqi > 50) &&
+               <Alert color="primary">
+                   <i className="fa fa-warning"></i> Put the mask on your face! The level of pollutants is harmful.
+                </Alert>
+              }
             <Row>
                 <Col md="4">
                     <div className={classes.Text}>
@@ -186,7 +223,7 @@ class StatsFilter extends React.Component {
                             <td>{this.state.pm10}</td>
                         </tr>
                         <tr>
-                            <th>PM25</th>
+                            <th  >PM2.5</th>
                             <td>{this.state.pm25}</td>
                         </tr>
                         <tr>
@@ -199,29 +236,51 @@ class StatsFilter extends React.Component {
                     </Col>
                     <Col md="4">
                         <h5>Stats in chart</h5>
-                        <Doughnut height={"250px"} data={data} options={option} className={classes.Charts}/>
+                        <Doughnut height={250} data={data} options={option} className={classes.Charts}/>
                     </Col>
                     <Col md="4">
                         <h5>Map</h5>
                         <h6>Click on the city to select it</h6>
-                        <MapComponent height={"100%"} myFunction={this.myFunction} className={classes.Map}/>
+                        <MapComponent  height={"100%"} myFunction={this.myFunction} className={classes.Map}/>
                     </Col>
                 </Row>
-                <Row >
-                    <Col className={classes.StatsPolution}>
-                        <h5>Real time stats</h5>
-                        <h6>Select your city to check the air pollution levels</h6>
+                <Row className={classes.StatsPolution}>
+                    <Col md="6">
+                        <h5>Air Quality Standards</h5>
+                        <h6>Table of permitted average concentration</h6>
                         <table>
                             <thead>
-                                <th>PM-10</th>
-                                <td>SDFSDF</td>
+                            <tr>
+                                <th>Pollutant</th>
+                                <th>Concentration</th>
+                                <th>Averaging period</th>
+                                </tr>
                             </thead>
+                            <tbody>
+                                <tr>
+                                    <th>PM2.5</th>
+                                    <td>25 µg/m</td>
+                                    <td>1 year</td>
+                                </tr>
+                                <tr>
+                                    <th>PM10</th>
+                                    <td>40 µg/m3</td>
+                                    <td>1 year</td>
+                                </tr>
+                                <tr>
+                                    <th>AQI</th>
+                                    <td>50 µg/m3</td>
+                                    <td>1 year</td>
+                                </tr>
+                            </tbody>
                         </table>
+                    </Col>
+                    <Col>
+                    <Generator></Generator>
                     </Col>
                 </Row>
             </Container>
             </div>
-
         );
     }
 }

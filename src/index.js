@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import classes from './index.css';
 import StatsFilter from './containers/StatsFilter/StatsFilter';
 import IntroScreen from './containers/IntroScreen/IntroScreen';
 import Process from './containers/Process/Process';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
 import Layout from './components/Layout/Layout';
-import Waves from './components/Waves/waves';
+import './index.css';
+import Footer from './components/Footer/Footer';
 
 
 const routing = (
@@ -15,10 +15,11 @@ const routing = (
       <div>
         <Layout>
             <Route path="/" exact component={IntroScreen}/>
-            <Route path="/stats" component={StatsFilter} selectedCity="Bitola" />
+            <Route path="/stats" component={StatsFilter}/>
             <Route path="/process" component={Process} />
             {/* <Waves></Waves> */}
         </Layout>
+        <Footer></Footer>
       </div>
     </Router>
   )
