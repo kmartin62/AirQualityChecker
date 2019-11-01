@@ -110,7 +110,7 @@ export default class StatsChart extends React.Component {
                     <CardImg top width="100%" src={require('./pics-02.svg')} alt="Card image cap" />
                     <CardBody>
                       <CardTitle>Analytics</CardTitle>
-                      <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
+                      <CardText>We analyze, visualize and provide you the data we gather from our services.</CardText>
                     </CardBody>
                   </Card>
                  </Col>
@@ -119,7 +119,7 @@ export default class StatsChart extends React.Component {
                     <CardImg top width="100%" src={require('./pics-01.svg')} alt="Card image cap" />
                     <CardBody>
                       <CardTitle>Stats</CardTitle>
-                      <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
+                      <CardText>Using the data, we provide statistics about the air quality standard in cities in Macedonia.</CardText>
                     </CardBody>
                   </Card>
                  </Col>
@@ -128,7 +128,7 @@ export default class StatsChart extends React.Component {
                     <CardImg top width="100%" src={require('./pics-03.svg')} alt="Card image cap" />
                     <CardBody>
                       <CardTitle>Realtime Update</CardTitle>
-                      <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
+                      <CardText>Our data is updated and collected hourly and live to provide you with realtime stats.</CardText>
                     </CardBody>
                   </Card>
                  </Col>

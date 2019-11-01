@@ -8,7 +8,7 @@ const NavigationItems = () => {
     // var activeClass = isActive ? 'active' : '';
     return (
         <ul className={classes.NavigationItems}>
-            <NavigationItem link="/">ABOUT US</NavigationItem>
+            <NavigationItem link="/">HOME</NavigationItem>
             <NavigationItem link="/stats">STATS</NavigationItem>
             <NavigationItem link="/process">PROCESS</NavigationItem>
         </ul>

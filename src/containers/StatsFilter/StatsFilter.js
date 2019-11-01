@@ -117,7 +117,7 @@ class StatsFilter extends React.Component {
         return lastDirectory;
     }
     readUserData(city_name){
-        firebase.database().ref("Momentalno/" + city_name + "/").once('value', (snapshot) => {
+        firebase.database().ref("Realtime/" + city_name + "/").once('value', (snapshot) => {
             if(snapshot.exists()){
                 if(snapshot.val().key.localeCompare(this.getKey()) === 0) {
                     this.setState({pm10: snapshot.val().pm10});
@@ -137,7 +137,7 @@ class StatsFilter extends React.Component {
         })
     }
     writeUserData(city_name, key, pm10, pm25, aqi){
-        firebase.database().ref("Momentalno/" + city_name + "/").set({
+        firebase.database().ref("Realtime/" + city_name + "/").set({
             city_name,
             pm10,
             pm25,
@@ -147,7 +147,7 @@ class StatsFilter extends React.Component {
             // console.log("error ", error)
         });
 
-        firebase.database().ref("Istorija/").push({
+        firebase.database().ref("Stats/").push({
             city_name,
             pm10,
             pm25,
